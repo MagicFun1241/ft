@@ -15,8 +15,7 @@ func Sign(payload interface{}, secret []byte) []byte {
 	h := hash(b, secret)
 
 	b, _ = msgpack.Marshal(&token{Payload: b, Hash: h})
-
-	var r []byte
+	r := make([]byte, ascii85.MaxEncodedLen(len(b)))
 	ascii85.Encode(r, b)
 	return r
 }
